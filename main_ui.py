@@ -14,9 +14,10 @@ from PyQt5.QtWidgets import QDialog
 from speed_ui import Ui_Dialog as Speed_Ui_Dialog
 from UART_ui import Ui_Dialog as UART_Ui_Dialog
 from uart_parse import UARTParser, get_uart_default_settings
-
+from draw_figure import DataFigure
 
 REFRESH_TIME = 1000
+DATA_LIST_LIMIT = 60
 
 
 class Ui_Form(QtWidgets.QMainWindow):
@@ -31,10 +32,11 @@ class Ui_Form(QtWidgets.QMainWindow):
         return super().mousePressEvent(event)
 
     def mouseMoveEvent(self, event: QtGui.QMouseEvent) -> None:
-        if event.buttons() & Qt.LeftButton:
-            movePos = event.globalPos() - self.startPos
-            if movePos.manhattanLength() > 4:
-                self.move(event.globalPos() - self.startPosRelative)
+        if self.startPosRelative != None and self.startPos != None:
+            if event.buttons() & Qt.LeftButton:
+                movePos = event.globalPos() - self.startPos
+                if movePos.manhattanLength() > 4:
+                    self.move(event.globalPos() - self.startPosRelative)
         return super().mouseMoveEvent(event)
 
     def setupUi(self):
@@ -146,7 +148,10 @@ class Ui_Form(QtWidgets.QMainWindow):
         self.label_3.setAlignment(QtCore.Qt.AlignCenter)
         self.label_3.setObjectName("label_3")
         self.graphicsView = QtWidgets.QGraphicsView(Form)
-        self.graphicsView.setGeometry(QtCore.QRect(770, 220, 301, 231))
+        self.graphicsView.setGeometry(QtCore.QRect(770, 220, 321, 231))
+        self.graphicsView.setStyleSheet("QGraphicsView{"
+                                        "padding:0px;border:0px"
+                                        "}")
         self.graphicsView.setObjectName("graphicsView")
         self.label_6 = QtWidgets.QLabel(Form)
         self.label_6.setGeometry(QtCore.QRect(320, 380, 111, 31))
@@ -172,7 +177,10 @@ class Ui_Form(QtWidgets.QMainWindow):
         self.label_5.setAlignment(QtCore.Qt.AlignCenter)
         self.label_5.setObjectName("label_5")
         self.graphicsView_2 = QtWidgets.QGraphicsView(Form)
-        self.graphicsView_2.setGeometry(QtCore.QRect(770, 500, 301, 231))
+        self.graphicsView_2.setGeometry(QtCore.QRect(770, 500, 321, 231))
+        self.graphicsView_2.setStyleSheet("QGraphicsView{"
+                                          "padding:0px;border:0px"
+                                          "}")
         self.graphicsView_2.setObjectName("graphicsView_2")
         self.label_4 = QtWidgets.QLabel(Form)
         self.label_4.setGeometry(QtCore.QRect(190, 130, 41, 41))
@@ -192,7 +200,7 @@ class Ui_Form(QtWidgets.QMainWindow):
         self.label_7.setAlignment(QtCore.Qt.AlignRight)
         self.label_7.setObjectName("label_7")
         self.label_8 = QtWidgets.QLabel(Form)
-        self.label_8.setGeometry(QtCore.QRect(470, 370, 141, 51))
+        self.label_8.setGeometry(QtCore.QRect(490, 370, 131, 51))
         self.label_8.setStyleSheet("QLabel{\n"
                                    "    background:#FFFFFF;\n"
                                    "    color:black;\n"
@@ -229,12 +237,36 @@ class Ui_Form(QtWidgets.QMainWindow):
         self.startTimer(REFRESH_TIME)
         self.uart_parser = UARTParser(*get_uart_default_settings())
 
+        self.speed_list = []
+        self.temperature_list = []
+
     def timerEvent(self, event: 'QTimerEvent') -> None:
         self.uart_parser.get_data()
         _translate = QtCore.QCoreApplication.translate
         self.label_7.setText(_translate(
             "Form", f"{self.uart_parser.temperature}°C"))
-        self.label_8.setText(_translate("Form", f"{self.uart_parser.speed}%"))
+        self.label_8.setText(_translate("Form", f"{self.uart_parser.speed} %"))
+
+        self.speed_list.append(self.uart_parser.speed)
+        self.temperature_list.append(self.uart_parser.temperature)
+        if len(self.speed_list) > DATA_LIST_LIMIT:
+            self.speed_list.pop(0)
+            self.temperature_list.pop(0)
+
+        speed_figure = DataFigure()
+        speed_figure.display(self.speed_list)
+        speed_graphicscene = QtWidgets.QGraphicsScene()
+        speed_graphicscene.addWidget(speed_figure)
+        self.graphicsView.setScene(speed_graphicscene)
+        self.graphicsView.show()
+
+        temperature_figure = DataFigure()
+        temperature_figure.display(self.temperature_list)
+        temperature_graphicscene = QtWidgets.QGraphicsScene()
+        temperature_graphicscene.addWidget(temperature_figure)
+        self.graphicsView_2.setScene(temperature_graphicscene)
+        self.graphicsView_2.show()
+
         return super().timerEvent(event)
 
     def retranslateUi(self, Form):

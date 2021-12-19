@@ -8,7 +8,7 @@ def get_uart_default_settings():
     return "COM1", 9600, 8, 'N', 1
 
 
-def get_port_list():
+def get_uart_port_list():
     _port_list = list(serial.tools.list_ports.comports())
     port_list = []
     for port in _port_list:
@@ -27,14 +27,19 @@ class UARTParser():
         # Read Cache
         self.speed = 0
         self.temperature = 20
-        self.reconnect()
-
-    def reconnect(self):
         try:
             self.serial = serial.Serial(port=self.port, baudrate=self.baudrate, bytesize=self.bytesize,
                                         parity=self.parity, stopbits=self.stopbits, timeout=None)
         except Exception as e:
             print("---串口连接异常---", e)
+
+    def reconnect(self):
+        try:
+            self.serial.close()
+            self.serial = serial.Serial(port=self.port, baudrate=self.baudrate, bytesize=self.bytesize,
+                                        parity=self.parity, stopbits=self.stopbits, timeout=None)
+        except Exception as e:
+            print("---串口重连异常---", e)
 
     def set_to_default(self):
         self.port = "COM1"
@@ -77,7 +82,7 @@ class UARTParser():
 
 
 if __name__ == "__main__":
-    print(get_port_list())
+    print(get_uart_port_list())
     parser = UARTParser(*get_uart_default_settings())
     while True:
         # print(parser.get_data())

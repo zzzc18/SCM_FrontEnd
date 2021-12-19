@@ -221,9 +221,26 @@ QPushButton:pressed{
     <rect>
      <x>770</x>
      <y>220</y>
-     <width>301</width>
+     <width>321</width>
      <height>231</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QGraphicsView{
+    padding:0px;border:0px
+}</string>
+   </property>
+   <property name="lineWidth">
+    <number>1</number>
+   </property>
+   <property name="backgroundBrush">
+    <brush brushstyle="NoBrush">
+     <color alpha="255">
+      <red>0</red>
+      <green>0</green>
+      <blue>0</blue>
+     </color>
+    </brush>
    </property>
   </widget>
   <widget class="QLabel" name="label_6">
@@ -279,16 +296,6 @@ QPushButton:pressed{
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
-  <widget class="QGraphicsView" name="graphicsView_2">
-   <property name="geometry">
-    <rect>
-     <x>770</x>
-     <y>500</y>
-     <width>301</width>
-     <height>231</height>
-    </rect>
    </property>
   </widget>
   <widget class="QLabel" name="label_4">
@@ -362,6 +369,33 @@ QPushButton:pressed{
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
+  <widget class="QGraphicsView" name="graphicsView_2">
+   <property name="geometry">
+    <rect>
+     <x>770</x>
+     <y>510</y>
+     <width>321</width>
+     <height>231</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QGraphicsView{
+    padding:0px;border:0px
+}</string>
+   </property>
+   <property name="lineWidth">
+    <number>1</number>
+   </property>
+   <property name="backgroundBrush">
+    <brush brushstyle="NoBrush">
+     <color alpha="255">
+      <red>0</red>
+      <green>0</green>
+      <blue>0</blue>
+     </color>
+    </brush>
+   </property>
+  </widget>
   <zorder>label</zorder>
   <zorder>label_3</zorder>
   <zorder>graphicsView</zorder>
@@ -372,10 +406,10 @@ QPushButton:pressed{
   <zorder>pushButton_4</zorder>
   <zorder>label_6</zorder>
   <zorder>label_5</zorder>
-  <zorder>graphicsView_2</zorder>
   <zorder>label_4</zorder>
   <zorder>label_7</zorder>
   <zorder>label_8</zorder>
+  <zorder>graphicsView_2</zorder>
  </widget>
  <resources/>
  <connections/>

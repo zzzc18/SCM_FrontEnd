@@ -10,6 +10,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import *
+from uart_parse import UARTParser, get_uart_default_settings, get_uart_port_list
 
 
 class Ui_Dialog(QtWidgets.QDialog):
@@ -24,13 +25,14 @@ class Ui_Dialog(QtWidgets.QDialog):
         return super().mousePressEvent(event)
 
     def mouseMoveEvent(self, event: QtGui.QMouseEvent) -> None:
-        if event.buttons() & Qt.LeftButton:
-            movePos = event.globalPos() - self.startPos
-            if movePos.manhattanLength() > 4:
-                self.move(event.globalPos() - self.startPosRelative)
+        if self.startPosRelative != None and self.startPos != None:
+            if event.buttons() & Qt.LeftButton:
+                movePos = event.globalPos() - self.startPos
+                if movePos.manhattanLength() > 4:
+                    self.move(event.globalPos() - self.startPosRelative)
         return super().mouseMoveEvent(event)
 
-    def setupUi(self):
+    def setupUi(self, uart_parser: UARTParser):
         Dialog = self
         Dialog.setObjectName("Dialog")
         Dialog.resize(657, 511)
@@ -223,7 +225,50 @@ class Ui_Dialog(QtWidgets.QDialog):
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
+        self.uart_parser = uart_parser
+
+        self.update_available_ports()
+
+        self.update_settings_preview()
+
         self.pushButton_3.clicked.connect(self.close)
+        self.pushButton_2.clicked.connect(self.set_to_default)
+        self.pushButton.clicked.connect(self.apply_changes)
+
+    def update_available_ports(self):
+        _translate = QtCore.QCoreApplication.translate
+        available_ports = get_uart_port_list()
+        self.comboBox_2.clear()
+        for index, port in enumerate(available_ports):
+            self.comboBox_2.addItem("")
+            self.comboBox_2.setItemText(index, _translate("Dialog", port))
+
+    def update_settings_preview(self):
+        inv_parity_table = {'N': "无校验", 'E': "奇校验", 'O': "偶校验"}
+        self.comboBox_2.setCurrentIndex(
+            self.comboBox_2.findText(self.uart_parser.port))
+        self.comboBox_3.setCurrentIndex(
+            self.comboBox_3.findText(str(self.uart_parser.baudrate)))
+        self.comboBox_4.setCurrentIndex(
+            self.comboBox_4.findText(str(self.uart_parser.bytesize)))
+        self.comboBox_6.setCurrentIndex(
+            self.comboBox_6.findText(inv_parity_table[self.uart_parser.parity]))
+        self.comboBox_5.setCurrentIndex(
+            self.comboBox_5.findText(str(self.uart_parser.stopbits)))
+
+    def set_to_default(self):
+        self.uart_parser.set_to_default()
+        self.update_settings_preview()
+
+    def apply_changes(self):
+        parity_table = {"无校验": 'N', "奇校验": 'E', "偶校验": 'O'}
+        self.uart_parser.port = self.comboBox_2.currentText()
+        self.uart_parser.baudrate = int(self.comboBox_3.currentText())
+        self.uart_parser.bytesize = int(self.comboBox_4.currentText())
+        self.uart_parser.parity = parity_table[self.comboBox_6.currentText()]
+        self.uart_parser.stopbits = int(self.comboBox_5.currentText())
+        self.uart_parser.reconnect()
+        self.close()
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
