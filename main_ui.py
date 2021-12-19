@@ -10,14 +10,15 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import *
+from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QDialog
 from speed_ui import Ui_Dialog as Speed_Ui_Dialog
 from UART_ui import Ui_Dialog as UART_Ui_Dialog
 from uart_parse import UARTParser, get_uart_default_settings
-from draw_figure import DataFigure
+from draw_figure import SpeedFigure, TemperatureFigure
 
 REFRESH_TIME = 1000
-DATA_LIST_LIMIT = 60
+DATA_LIST_LIMIT = 30
 
 
 class Ui_Form(QtWidgets.QMainWindow):
@@ -48,13 +49,15 @@ class Ui_Form(QtWidgets.QMainWindow):
         self.setWindowFlags(Qt.FramelessWindowHint)  # 去边框
         self.setAttribute(Qt.WA_TranslucentBackground)  # 设置窗口背景透明
 
+        self.setWindowIcon(QIcon(".\\Assests/icon.jpg"))
+
         self.label.setGeometry(QtCore.QRect(90, 40, 1161, 801))
         self.label.setText("")
         self.label.setPixmap(QtGui.QPixmap(".\\Assests/background.webp"))
         self.label.setScaledContents(True)
         self.label.setObjectName("label")
         self.pushButton = QtWidgets.QPushButton(Form)
-        self.pushButton.setGeometry(QtCore.QRect(380, 550, 171, 41))
+        self.pushButton.setGeometry(QtCore.QRect(380, 570, 171, 41))
         self.pushButton.setStyleSheet("QPushButton{\n"
                                       "    color:White;\n"
                                       "    border-radius: 7px;\n"
@@ -106,7 +109,7 @@ class Ui_Form(QtWidgets.QMainWindow):
                                         "}")
         self.pushButton_3.setObjectName("pushButton_3")
         self.label_2 = QtWidgets.QLabel(Form)
-        self.label_2.setGeometry(QtCore.QRect(320, 270, 111, 31))
+        self.label_2.setGeometry(QtCore.QRect(320, 278, 111, 31))
         self.label_2.setStyleSheet("QLabel{\n"
                                    "    background:#6C6C6C;\n"
                                    "    color:white;\n"
@@ -117,7 +120,7 @@ class Ui_Form(QtWidgets.QMainWindow):
         self.label_2.setAlignment(QtCore.Qt.AlignCenter)
         self.label_2.setObjectName("label_2")
         self.pushButton_4 = QtWidgets.QPushButton(Form)
-        self.pushButton_4.setGeometry(QtCore.QRect(380, 620, 171, 41))
+        self.pushButton_4.setGeometry(QtCore.QRect(380, 640, 171, 41))
         self.pushButton_4.setStyleSheet("QPushButton{\n"
                                         "    color:White;\n"
                                         "    border-radius: 7px;\n"
@@ -154,7 +157,7 @@ class Ui_Form(QtWidgets.QMainWindow):
                                         "}")
         self.graphicsView.setObjectName("graphicsView")
         self.label_6 = QtWidgets.QLabel(Form)
-        self.label_6.setGeometry(QtCore.QRect(320, 380, 111, 31))
+        self.label_6.setGeometry(QtCore.QRect(320, 388, 111, 31))
         self.label_6.setStyleSheet("QLabel{\n"
                                    "    background:#6C6C6C;\n"
                                    "    color:white;\n"
@@ -195,7 +198,7 @@ class Ui_Form(QtWidgets.QMainWindow):
                                    "    color:black;\n"
                                    "    font-size:48px;\n"
                                    "    border-radius:\n"
-                                   "    8px;font-family: Consolas;\n"
+                                   "    8px;font-family: Microsoft YaHei UI;\n"
                                    "}")
         self.label_7.setAlignment(QtCore.Qt.AlignRight)
         self.label_7.setObjectName("label_7")
@@ -206,7 +209,7 @@ class Ui_Form(QtWidgets.QMainWindow):
                                    "    color:black;\n"
                                    "    font-size:48px;\n"
                                    "    border-radius:\n"
-                                   "    8px;font-family: Consolas;\n"
+                                   "    8px;font-family: Microsoft YaHei UI;\n"
                                    "}")
         self.label_8.setAlignment(QtCore.Qt.AlignRight)
         self.label_8.setObjectName("label_8")
@@ -239,6 +242,8 @@ class Ui_Form(QtWidgets.QMainWindow):
 
         self.speed_list = []
         self.temperature_list = []
+        self.speed_graphicscene = QtWidgets.QGraphicsScene()
+        self.temperature_graphicscene = QtWidgets.QGraphicsScene()
 
     def timerEvent(self, event: 'QTimerEvent') -> None:
         self.uart_parser.get_data()
@@ -253,19 +258,17 @@ class Ui_Form(QtWidgets.QMainWindow):
             self.speed_list.pop(0)
             self.temperature_list.pop(0)
 
-        speed_figure = DataFigure()
+        speed_figure = SpeedFigure()
         speed_figure.display(self.speed_list)
-        speed_graphicscene = QtWidgets.QGraphicsScene()
-        speed_graphicscene.addWidget(speed_figure)
-        self.graphicsView.setScene(speed_graphicscene)
-        self.graphicsView.show()
-
-        temperature_figure = DataFigure()
-        temperature_figure.display(self.temperature_list)
-        temperature_graphicscene = QtWidgets.QGraphicsScene()
-        temperature_graphicscene.addWidget(temperature_figure)
-        self.graphicsView_2.setScene(temperature_graphicscene)
+        self.speed_graphicscene.addWidget(speed_figure)
+        self.graphicsView_2.setScene(self.speed_graphicscene)
         self.graphicsView_2.show()
+
+        temperature_figure = TemperatureFigure()
+        temperature_figure.display(self.temperature_list)
+        self.temperature_graphicscene.addWidget(temperature_figure)
+        self.graphicsView.setScene(self.temperature_graphicscene)
+        self.graphicsView.show()
 
         return super().timerEvent(event)
 

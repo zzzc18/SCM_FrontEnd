@@ -164,7 +164,10 @@ class Ui_Dialog(QtWidgets.QDialog):
     def apply_changes(self):
         self.speed_config.speed = self.horizontalSlider.value()
         self.speed_config.mode = "special" if self.checkBox.isChecked() else "normal"
-        self.speed_config.count_down = int(self.lineEdit.text())
+        if self.lineEdit.text() != "":
+            self.speed_config.count_down = int(self.lineEdit.text())
+        else:
+            self.speed_config.count_down = 0
         if self.comboBox_3.currentData() == "分钟":
             self.speed_config.count_down *= 60
         elif self.comboBox_3.currentData() == "小时":
