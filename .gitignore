@@ -1,3 +1,6 @@
 __pycache__
 TMP
 Logs
+build
+main.spec
+dist

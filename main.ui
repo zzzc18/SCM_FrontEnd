@@ -396,6 +396,32 @@ QPushButton:pressed{
     </brush>
    </property>
   </widget>
+  <widget class="QLabel" name="label_9">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>120</y>
+     <width>281</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+    background:#FFFFFF;
+    color:black;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    font-size:36px;
+    border-radius:
+    8px;font-family: Consolas;
+}</string>
+   </property>
+   <property name="text">
+    <string>Fan Controller</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
   <zorder>label</zorder>
   <zorder>label_3</zorder>
   <zorder>graphicsView</zorder>
@@ -410,6 +436,7 @@ QPushButton:pressed{
   <zorder>label_7</zorder>
   <zorder>label_8</zorder>
   <zorder>graphicsView_2</zorder>
+  <zorder>label_9</zorder>
  </widget>
  <resources/>
  <connections/>

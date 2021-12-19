@@ -19,7 +19,7 @@ from draw_figure import SpeedFigure, TemperatureFigure
 import logging
 
 REFRESH_TIME = 1000
-DATA_LIST_LIMIT = 30
+DATA_LIST_LIMIT = 60
 
 
 class Ui_Form(QtWidgets.QMainWindow):
@@ -229,6 +229,20 @@ class Ui_Form(QtWidgets.QMainWindow):
         self.label_7.raise_()
         self.label_8.raise_()
 
+        self.label_9 = QtWidgets.QLabel(Form)
+        self.label_9.setGeometry(QtCore.QRect(260, 120, 281, 71))
+        self.label_9.setStyleSheet("QLabel{\n"
+                                   "    background:#FFFFFF;\n"
+                                   "    color:black;\n"
+                                   "    font-size:36px;\n"
+                                   "    border-radius:\n"
+                                   "    8px;font-family: Consolas;\n"
+                                   "}")
+        self.label_9.setAlignment(
+            QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
+        self.label_9.setObjectName("label_9")
+        self.label_9.raise_()
+
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
@@ -289,6 +303,7 @@ class Ui_Form(QtWidgets.QMainWindow):
         self.label_5.setText(_translate("Form", "转速曲线"))
         self.label_7.setText(_translate("Form", "°C"))
         self.label_8.setText(_translate("Form", "%"))
+        self.label_9.setText(_translate("Form", "Fan Controller"))
 
     def to_uart_settings(self):
         self.uart_dialog = UART_Ui_Dialog()
