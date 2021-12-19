@@ -223,15 +223,13 @@ class Ui_Form(QtWidgets.QMainWindow):
         self.pushButton_4.clicked.connect(self.to_uart_settings)
 
     def to_uart_settings(self):
-        self.uart_dialog = QDialog()
-        sub_ui = UART_Ui_Dialog()
-        sub_ui.setupUi(self.uart_dialog)
+        self.uart_dialog = UART_Ui_Dialog()
+        self.uart_dialog.setupUi()
         self.uart_dialog.show()
 
     def to_speed_settings(self):
-        self.speed_dialog = QDialog()
-        sub_ui = Speed_Ui_Dialog()
-        sub_ui.setupUi(self.speed_dialog)
+        self.speed_dialog = Speed_Ui_Dialog()
+        self.speed_dialog.setupUi()
         self.speed_dialog.show()
 
     def retranslateUi(self, Form):
