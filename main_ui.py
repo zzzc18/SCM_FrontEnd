@@ -10,6 +10,9 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import *
+from PyQt5.QtWidgets import QDialog
+from speed_ui import Ui_Dialog as Speed_Ui_Dialog
+from UART_ui import Ui_Dialog as UART_Ui_Dialog
 
 
 class Ui_Form(QtWidgets.QMainWindow):
@@ -68,7 +71,6 @@ class Ui_Form(QtWidgets.QMainWindow):
         self.pushButton_2.setStyleSheet("QPushButton{\n"
                                         "    background:#6C6C6C;\n"
                                         "    color:white;\n"
-                                        "    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);\n"
                                         "    font-size:18px;\n"
                                         "    border-radius: 12px;\n"
                                         "    font-family: Consolas;\n"
@@ -85,7 +87,6 @@ class Ui_Form(QtWidgets.QMainWindow):
         self.pushButton_3.setStyleSheet("QPushButton{\n"
                                         "    background:#CE0000;\n"
                                         "    color:white;\n"
-                                        "    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);\n"
                                         "    font-size:18px;\n"
                                         "    border-radius: 12px;\n"
                                         "    font-family: Consolas;\n"
@@ -103,7 +104,6 @@ class Ui_Form(QtWidgets.QMainWindow):
         self.label_2.setStyleSheet("QLabel{\n"
                                    "    background:#6C6C6C;\n"
                                    "    color:white;\n"
-                                   "    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);\n"
                                    "    font-size:16px;\n"
                                    "    border-radius:\n"
                                    "    8px;font-family: 微软雅黑;\n"
@@ -135,7 +135,6 @@ class Ui_Form(QtWidgets.QMainWindow):
         self.label_3.setStyleSheet("QLabel{\n"
                                    "    background:#6C6C6C;\n"
                                    "    color:white;\n"
-                                   "    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);\n"
                                    "    font-size:16px;\n"
                                    "    border-radius:\n"
                                    "    8px;font-family: 微软雅黑;\n"
@@ -150,7 +149,6 @@ class Ui_Form(QtWidgets.QMainWindow):
         self.label_6.setStyleSheet("QLabel{\n"
                                    "    background:#6C6C6C;\n"
                                    "    color:white;\n"
-                                   "    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);\n"
                                    "    font-size:16px;\n"
                                    "    border-radius:\n"
                                    "    8px;font-family: 微软雅黑;\n"
@@ -163,7 +161,6 @@ class Ui_Form(QtWidgets.QMainWindow):
         self.label_5.setStyleSheet("QLabel{\n"
                                    "    background:#6C6C6C;\n"
                                    "    color:white;\n"
-                                   "    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);\n"
                                    "    font-size:16px;\n"
                                    "    border-radius:\n"
                                    "    8px;font-family: 微软雅黑;\n"
@@ -184,7 +181,6 @@ class Ui_Form(QtWidgets.QMainWindow):
         self.label_7.setStyleSheet("QLabel{\n"
                                    "    background:#FFFFFF;\n"
                                    "    color:black;\n"
-                                   "    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);\n"
                                    "    font-size:24px;\n"
                                    "    border-radius:\n"
                                    "    8px;font-family: Consolas;\n"
@@ -196,7 +192,6 @@ class Ui_Form(QtWidgets.QMainWindow):
         self.label_8.setStyleSheet("QLabel{\n"
                                    "    background:#FFFFFF;\n"
                                    "    color:black;\n"
-                                   "    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);\n"
                                    "    font-size:24px;\n"
                                    "    border-radius:\n"
                                    "    8px;font-family: Consolas;\n"
@@ -220,6 +215,24 @@ class Ui_Form(QtWidgets.QMainWindow):
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
+
+        self.pushButton_2.clicked.connect(self.showMinimized)
+        self.pushButton_3.clicked.connect(self.close)
+
+        self.pushButton.clicked.connect(self.to_speed_settings)
+        self.pushButton_4.clicked.connect(self.to_uart_settings)
+
+    def to_uart_settings(self):
+        self.uart_dialog = QDialog()
+        sub_ui = UART_Ui_Dialog()
+        sub_ui.setupUi(self.uart_dialog)
+        self.uart_dialog.show()
+
+    def to_speed_settings(self):
+        self.speed_dialog = QDialog()
+        sub_ui = Speed_Ui_Dialog()
+        sub_ui.setupUi(self.speed_dialog)
+        self.speed_dialog.show()
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate

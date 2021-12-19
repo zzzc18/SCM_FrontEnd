@@ -107,7 +107,7 @@ class Ui_Dialog(object):
         self.checkBox.setTristate(False)
         self.checkBox.setObjectName("checkBox")
         self.comboBox_3 = QtWidgets.QComboBox(Dialog)
-        self.comboBox_3.setGeometry(QtCore.QRect(450, 220, 61, 31))
+        self.comboBox_3.setGeometry(QtCore.QRect(440, 220, 71, 31))
         self.comboBox_3.setStyleSheet("QComboBox{\n"
 "    font-size:18px;\n"
 "    font-family: Consolas;\n"
