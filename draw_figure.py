@@ -7,7 +7,7 @@ matplotlib.use("Qt5Agg")
 
 class SpeedFigure(FigureCanvas):
     def __init__(self):
-        fig = Figure(figsize=(3.2, 2.3), dpi=100)
+        fig = Figure(figsize=(4, 3), dpi=80)
         FigureCanvas.__init__(self, fig)
         self.axes = fig.add_subplot(111)
 
@@ -19,7 +19,7 @@ class SpeedFigure(FigureCanvas):
 
 class TemperatureFigure(FigureCanvas):
     def __init__(self):
-        fig = Figure(figsize=(3.2, 2.3), dpi=100)
+        fig = Figure(figsize=(4, 3), dpi=80)
         FigureCanvas.__init__(self, fig)
         self.axes = fig.add_subplot(111)
 

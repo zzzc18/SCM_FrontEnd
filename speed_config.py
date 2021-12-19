@@ -1,4 +1,5 @@
 from uart_parse import UARTParser
+import logging
 
 
 class SpeedConfig():
@@ -19,3 +20,5 @@ class SpeedConfig():
         count_down = f"C{self.count_down:03d}"
         data = speed_data+mode_data+count_down
         self.uart_parser.send_data(data)
+        logging.warning(
+            f"[风扇转速设定] 转速：{self.speed}% 工作模式：{self.mode} 倒计时设定：{self.count_down}秒")

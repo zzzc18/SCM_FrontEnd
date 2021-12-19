@@ -1,3 +1,4 @@
+import logging
 from re import T
 import serial  # 导入模块
 import time
@@ -32,12 +33,16 @@ class UARTParser():
                                         parity=self.parity, stopbits=self.stopbits, timeout=None)
         except Exception as e:
             print("---串口连接异常---", e)
+        logging.warning(
+            f"[串口初始化] 串口：{self.port} 波特率：{self.baudrate} 数据位：{self.bytesize} 校验位：{self.parity} 停止位：{self.stopbits}")
 
     def reconnect(self):
         try:
             self.serial.close()
             self.serial = serial.Serial(port=self.port, baudrate=self.baudrate, bytesize=self.bytesize,
                                         parity=self.parity, stopbits=self.stopbits, timeout=None)
+            logging.warning(
+                f"[串口重设] 串口：{self.port} 波特率：{self.baudrate} 数据位：{self.bytesize} 校验位：{self.parity} 停止位：{self.stopbits}")
         except Exception as e:
             print("---串口重连异常---", e)
 

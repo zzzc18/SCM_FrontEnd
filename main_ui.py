@@ -16,6 +16,7 @@ from speed_ui import Ui_Dialog as Speed_Ui_Dialog
 from UART_ui import Ui_Dialog as UART_Ui_Dialog
 from uart_parse import UARTParser, get_uart_default_settings
 from draw_figure import SpeedFigure, TemperatureFigure
+import logging
 
 REFRESH_TIME = 1000
 DATA_LIST_LIMIT = 30
@@ -151,7 +152,7 @@ class Ui_Form(QtWidgets.QMainWindow):
         self.label_3.setAlignment(QtCore.Qt.AlignCenter)
         self.label_3.setObjectName("label_3")
         self.graphicsView = QtWidgets.QGraphicsView(Form)
-        self.graphicsView.setGeometry(QtCore.QRect(770, 220, 321, 231))
+        self.graphicsView.setGeometry(QtCore.QRect(770, 210, 321, 241))
         self.graphicsView.setStyleSheet("QGraphicsView{"
                                         "padding:0px;border:0px"
                                         "}")
@@ -180,7 +181,7 @@ class Ui_Form(QtWidgets.QMainWindow):
         self.label_5.setAlignment(QtCore.Qt.AlignCenter)
         self.label_5.setObjectName("label_5")
         self.graphicsView_2 = QtWidgets.QGraphicsView(Form)
-        self.graphicsView_2.setGeometry(QtCore.QRect(770, 500, 321, 231))
+        self.graphicsView_2.setGeometry(QtCore.QRect(770, 490, 321, 241))
         self.graphicsView_2.setStyleSheet("QGraphicsView{"
                                           "padding:0px;border:0px"
                                           "}")
@@ -251,6 +252,9 @@ class Ui_Form(QtWidgets.QMainWindow):
         self.label_7.setText(_translate(
             "Form", f"{self.uart_parser.temperature}°C"))
         self.label_8.setText(_translate("Form", f"{self.uart_parser.speed} %"))
+
+        logging.info(
+            f"[风扇状态] 转速：{self.uart_parser.speed}% 温度：{self.uart_parser.temperature}")
 
         self.speed_list.append(self.uart_parser.speed)
         self.temperature_list.append(self.uart_parser.temperature)
