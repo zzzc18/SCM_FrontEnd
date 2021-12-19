@@ -11,6 +11,9 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import *
 
+from speed_config import SpeedConfig
+from uart_parse import UARTParser
+
 
 class Ui_Dialog(QtWidgets.QDialog):
     def __init__(self):
@@ -24,13 +27,14 @@ class Ui_Dialog(QtWidgets.QDialog):
         return super().mousePressEvent(event)
 
     def mouseMoveEvent(self, event: QtGui.QMouseEvent) -> None:
-        if event.buttons() & Qt.LeftButton:
-            movePos = event.globalPos() - self.startPos
-            if movePos.manhattanLength() > 4:
-                self.move(event.globalPos() - self.startPosRelative)
+        if self.startPosRelative != None and self.startPos != None:
+            if event.buttons() & Qt.LeftButton:
+                movePos = event.globalPos() - self.startPos
+                if movePos.manhattanLength() > 4:
+                    self.move(event.globalPos() - self.startPosRelative)
         return super().mouseMoveEvent(event)
 
-    def setupUi(self):
+    def setupUi(self, uart_parser: UARTParser):
         Dialog = self
         Dialog.setObjectName("Dialog")
         Dialog.resize(674, 503)
@@ -63,7 +67,7 @@ class Ui_Dialog(QtWidgets.QDialog):
         self.pushButton.setFlat(False)
         self.pushButton.setObjectName("pushButton")
         self.pushButton_3 = QtWidgets.QPushButton(Dialog)
-        self.pushButton_3.setGeometry(QtCore.QRect(550, 50, 31, 31))
+        self.pushButton_3.setGeometry(QtCore.QRect(550, 60, 31, 31))
         self.pushButton_3.setStyleSheet("QPushButton{\n"
                                         "    background:#CE0000;\n"
                                         "    color:white;\n"
@@ -97,7 +101,7 @@ class Ui_Dialog(QtWidgets.QDialog):
         self.label_2.setAlignment(QtCore.Qt.AlignCenter)
         self.label_2.setObjectName("label_2")
         self.horizontalSlider = QtWidgets.QSlider(Dialog)
-        self.horizontalSlider.setGeometry(QtCore.QRect(330, 160, 171, 31))
+        self.horizontalSlider.setGeometry(QtCore.QRect(330, 160, 101, 31))
         self.horizontalSlider.setOrientation(QtCore.Qt.Horizontal)
         self.horizontalSlider.setObjectName("horizontalSlider")
         self.label_3 = QtWidgets.QLabel(Dialog)
@@ -136,11 +140,42 @@ class Ui_Dialog(QtWidgets.QDialog):
         self.comboBox_3.addItem("")
         self.comboBox_3.addItem("")
         self.comboBox_3.addItem("")
+        self.label_8 = QtWidgets.QLabel(Dialog)
+        self.label_8.setGeometry(QtCore.QRect(440, 160, 71, 31))
+        self.label_8.setStyleSheet("QLabel{\n"
+                                   "    background:#FFFFFF;\n"
+                                   "    color:black;\n"
+                                   "    font-size:24px;\n"
+                                   "    border-radius:\n"
+                                   "    8px;font-family: Consolas;\n"
+                                   "}")
+        self.label_8.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_8.setObjectName("label_8")
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
         self.pushButton_3.clicked.connect(self.close)
+        self.pushButton.clicked.connect(self.apply_changes)
+        self.horizontalSlider.valueChanged.connect(self.update_speed_preview)
+
+        self.speed_config = SpeedConfig(uart_parser)
+
+    def apply_changes(self):
+        self.speed_config.speed = self.horizontalSlider.value()
+        self.speed_config.mode = "special" if self.checkBox.isChecked() else "normal"
+        self.speed_config.count_down = int(self.lineEdit.text())
+        if self.comboBox_3.currentData() == "分钟":
+            self.speed_config.count_down *= 60
+        elif self.comboBox_3.currentData() == "小时":
+            self.speed_config.count_down *= 3600
+        self.speed_config.send()
+        self.close()
+
+    def update_speed_preview(self):
+        _translate = QtCore.QCoreApplication.translate
+        speed = self.horizontalSlider.value()
+        self.label_8.setText(_translate("Form", f"{speed}%"))
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
@@ -153,3 +188,4 @@ class Ui_Dialog(QtWidgets.QDialog):
         self.comboBox_3.setItemText(0, _translate("Dialog", "秒"))
         self.comboBox_3.setItemText(1, _translate("Dialog", "分钟"))
         self.comboBox_3.setItemText(2, _translate("Dialog", "小时"))
+        self.label_8.setText(_translate("Dialog", "%"))

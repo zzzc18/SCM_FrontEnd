@@ -13,6 +13,10 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import QDialog
 from speed_ui import Ui_Dialog as Speed_Ui_Dialog
 from UART_ui import Ui_Dialog as UART_Ui_Dialog
+from uart_parse import UARTParser, get_uart_default_settings
+
+
+REFRESH_TIME = 1000
 
 
 class Ui_Form(QtWidgets.QMainWindow):
@@ -100,7 +104,7 @@ class Ui_Form(QtWidgets.QMainWindow):
                                         "}")
         self.pushButton_3.setObjectName("pushButton_3")
         self.label_2 = QtWidgets.QLabel(Form)
-        self.label_2.setGeometry(QtCore.QRect(340, 280, 101, 31))
+        self.label_2.setGeometry(QtCore.QRect(320, 270, 111, 31))
         self.label_2.setStyleSheet("QLabel{\n"
                                    "    background:#6C6C6C;\n"
                                    "    color:white;\n"
@@ -145,7 +149,7 @@ class Ui_Form(QtWidgets.QMainWindow):
         self.graphicsView.setGeometry(QtCore.QRect(770, 220, 301, 231))
         self.graphicsView.setObjectName("graphicsView")
         self.label_6 = QtWidgets.QLabel(Form)
-        self.label_6.setGeometry(QtCore.QRect(340, 360, 101, 31))
+        self.label_6.setGeometry(QtCore.QRect(320, 380, 111, 31))
         self.label_6.setStyleSheet("QLabel{\n"
                                    "    background:#6C6C6C;\n"
                                    "    color:white;\n"
@@ -177,26 +181,26 @@ class Ui_Form(QtWidgets.QMainWindow):
         self.label_4.setScaledContents(True)
         self.label_4.setObjectName("label_4")
         self.label_7 = QtWidgets.QLabel(Form)
-        self.label_7.setGeometry(QtCore.QRect(490, 270, 121, 51))
+        self.label_7.setGeometry(QtCore.QRect(490, 260, 131, 51))
         self.label_7.setStyleSheet("QLabel{\n"
                                    "    background:#FFFFFF;\n"
                                    "    color:black;\n"
-                                   "    font-size:24px;\n"
+                                   "    font-size:48px;\n"
                                    "    border-radius:\n"
                                    "    8px;font-family: Consolas;\n"
                                    "}")
-        self.label_7.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_7.setAlignment(QtCore.Qt.AlignRight)
         self.label_7.setObjectName("label_7")
         self.label_8 = QtWidgets.QLabel(Form)
-        self.label_8.setGeometry(QtCore.QRect(500, 360, 101, 31))
+        self.label_8.setGeometry(QtCore.QRect(470, 370, 141, 51))
         self.label_8.setStyleSheet("QLabel{\n"
                                    "    background:#FFFFFF;\n"
                                    "    color:black;\n"
-                                   "    font-size:24px;\n"
+                                   "    font-size:48px;\n"
                                    "    border-radius:\n"
                                    "    8px;font-family: Consolas;\n"
                                    "}")
-        self.label_8.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_8.setAlignment(QtCore.Qt.AlignRight)
         self.label_8.setObjectName("label_8")
         self.label.raise_()
         self.label_3.raise_()
@@ -222,15 +226,16 @@ class Ui_Form(QtWidgets.QMainWindow):
         self.pushButton.clicked.connect(self.to_speed_settings)
         self.pushButton_4.clicked.connect(self.to_uart_settings)
 
-    def to_uart_settings(self):
-        self.uart_dialog = UART_Ui_Dialog()
-        self.uart_dialog.setupUi()
-        self.uart_dialog.show()
+        self.startTimer(REFRESH_TIME)
+        self.uart_parser = UARTParser(*get_uart_default_settings())
 
-    def to_speed_settings(self):
-        self.speed_dialog = Speed_Ui_Dialog()
-        self.speed_dialog.setupUi()
-        self.speed_dialog.show()
+    def timerEvent(self, event: 'QTimerEvent') -> None:
+        self.uart_parser.get_data()
+        _translate = QtCore.QCoreApplication.translate
+        self.label_7.setText(_translate(
+            "Form", f"{self.uart_parser.temperature}°C"))
+        self.label_8.setText(_translate("Form", f"{self.uart_parser.speed}%"))
+        return super().timerEvent(event)
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
@@ -245,3 +250,13 @@ class Ui_Form(QtWidgets.QMainWindow):
         self.label_5.setText(_translate("Form", "转速曲线"))
         self.label_7.setText(_translate("Form", "°C"))
         self.label_8.setText(_translate("Form", "%"))
+
+    def to_uart_settings(self):
+        self.uart_dialog = UART_Ui_Dialog()
+        self.uart_dialog.setupUi(self.uart_parser)
+        self.uart_dialog.show()
+
+    def to_speed_settings(self):
+        self.speed_dialog = Speed_Ui_Dialog()
+        self.speed_dialog.setupUi(self.uart_parser)
+        self.speed_dialog.show()
