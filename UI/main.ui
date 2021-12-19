@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1302</width>
+    <height>958</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>40</y>
+     <width>1161</width>
+     <height>801</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap>Assests/background.webp</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>380</x>
+     <y>550</y>
+     <width>171</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+    color:White;
+    border-radius: 7px;
+    font-family:微软雅黑;
+    background:#6633FF;
+    border:1px;
+    font-size:16px;
+}
+QPushButton:hover{
+    background:#6666FF;
+}
+QPushButton:pressed{
+    background:#6600FF;
+}</string>
+   </property>
+   <property name="text">
+    <string>转速和定时设定</string>
+   </property>
+   <property name="autoDefault">
+    <bool>false</bool>
+   </property>
+   <property name="flat">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_2">
+   <property name="geometry">
+    <rect>
+     <x>1071</x>
+     <y>130</y>
+     <width>31</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+    background:#6C6C6C;
+    color:white;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    font-size:18px;
+    border-radius: 12px;
+    font-family: Consolas;
+}
+QPushButton:hover{                    
+    background:#9D9D9D;
+}
+QPushButton:pressed{
+    border: 1px solid #3C3C3C!important;
+}</string>
+   </property>
+   <property name="text">
+    <string>-</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_3">
+   <property name="geometry">
+    <rect>
+     <x>1120</x>
+     <y>130</y>
+     <width>31</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+    background:#CE0000;
+    color:white;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    font-size:18px;
+    border-radius: 12px;
+    font-family: Consolas;
+}
+QPushButton:hover{                    
+    background:#FF2D2D;
+}
+QPushButton:pressed{
+    border: 1px solid #3C3C3C!important;
+    background:#AE0000;
+}</string>
+   </property>
+   <property name="text">
+    <string>X</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>340</x>
+     <y>280</y>
+     <width>101</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+    background:#6C6C6C;
+    color:white;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    font-size:16px;
+    border-radius:
+    8px;font-family: 微软雅黑;
+}</string>
+   </property>
+   <property name="text">
+    <string>实时温度</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_4">
+   <property name="geometry">
+    <rect>
+     <x>380</x>
+     <y>620</y>
+     <width>171</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+    color:White;
+    border-radius: 7px;
+    font-family:微软雅黑;
+    background:#6633FF;
+    border:1px;
+    font-size:16px;
+}
+QPushButton:hover{
+    background:#6666FF;
+}
+QPushButton:pressed{
+    background:#6600FF;
+}</string>
+   </property>
+   <property name="text">
+    <string>串口设定</string>
+   </property>
+   <property name="autoDefault">
+    <bool>false</bool>
+   </property>
+   <property name="flat">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>870</x>
+     <y>180</y>
+     <width>111</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+    background:#6C6C6C;
+    color:white;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    font-size:16px;
+    border-radius:
+    8px;font-family: 微软雅黑;
+}</string>
+   </property>
+   <property name="text">
+    <string>温度曲线</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QGraphicsView" name="graphicsView">
+   <property name="geometry">
+    <rect>
+     <x>770</x>
+     <y>220</y>
+     <width>301</width>
+     <height>231</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_6">
+   <property name="geometry">
+    <rect>
+     <x>340</x>
+     <y>360</y>
+     <width>101</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+    background:#6C6C6C;
+    color:white;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    font-size:16px;
+    border-radius:
+    8px;font-family: 微软雅黑;
+}</string>
+   </property>
+   <property name="text">
+    <string>实时转速</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>870</x>
+     <y>460</y>
+     <width>111</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+    background:#6C6C6C;
+    color:white;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    font-size:16px;
+    border-radius:
+    8px;font-family: 微软雅黑;
+}</string>
+   </property>
+   <property name="text">
+    <string>转速曲线</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QGraphicsView" name="graphicsView_2">
+   <property name="geometry">
+    <rect>
+     <x>770</x>
+     <y>500</y>
+     <width>301</width>
+     <height>231</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>130</y>
+     <width>41</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap>Assests/icon.jpg</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_7">
+   <property name="geometry">
+    <rect>
+     <x>490</x>
+     <y>270</y>
+     <width>121</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+    background:#FFFFFF;
+    color:black;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    font-size:24px;
+    border-radius:
+    8px;font-family: Consolas;
+}</string>
+   </property>
+   <property name="text">
+    <string>°C</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_8">
+   <property name="geometry">
+    <rect>
+     <x>500</x>
+     <y>360</y>
+     <width>101</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+    background:#FFFFFF;
+    color:black;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    font-size:24px;
+    border-radius:
+    8px;font-family: Consolas;
+}</string>
+   </property>
+   <property name="text">
+    <string>%</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <zorder>label</zorder>
+  <zorder>label_3</zorder>
+  <zorder>graphicsView</zorder>
+  <zorder>pushButton</zorder>
+  <zorder>pushButton_2</zorder>
+  <zorder>pushButton_3</zorder>
+  <zorder>label_2</zorder>
+  <zorder>pushButton_4</zorder>
+  <zorder>label_6</zorder>
+  <zorder>label_5</zorder>
+  <zorder>graphicsView_2</zorder>
+  <zorder>label_4</zorder>
+  <zorder>label_7</zorder>
+  <zorder>label_8</zorder>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
