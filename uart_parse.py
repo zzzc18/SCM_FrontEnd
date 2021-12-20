@@ -1,5 +1,4 @@
 import logging
-from re import T
 import serial  # 导入模块
 import time
 import serial.tools.list_ports
@@ -33,6 +32,7 @@ class UARTParser():
             self.serial = serial.Serial(port=self.port, baudrate=self.baudrate, bytesize=self.bytesize,
                                         parity=self.parity, stopbits=self.stopbits, timeout=None)
         except Exception as e:
+            logging.error("[串口连接异常]")
             print("---串口连接异常---", e)
         logging.warning(
             f"[串口初始化] 串口：{self.port} 波特率：{self.baudrate} 数据位：{self.bytesize} 校验位：{self.parity} 停止位：{self.stopbits}")
@@ -45,6 +45,7 @@ class UARTParser():
             logging.warning(
                 f"[串口重设] 串口：{self.port} 波特率：{self.baudrate} 数据位：{self.bytesize} 校验位：{self.parity} 停止位：{self.stopbits}")
         except Exception as e:
+            logging.error("[串口重连异常]")
             print("---串口重连异常---", e)
 
     def set_to_default(self):
@@ -61,6 +62,7 @@ class UARTParser():
         try:
             data = self.serial.read_all()
         except Exception as e:
+            logging.error("[数据读取异常]")
             print("---读取数据异常---", e)
         data = str(data, encoding="utf-8")
         if data == "":
@@ -71,9 +73,15 @@ class UARTParser():
                 continue
             command, value = line.split(" ")
             if command == "T":
-                self.temperature = int(value)
+                try:
+                    self.temperature = int(value)
+                except Exception as e:
+                    logging.warning("[温度数据异常]")
             elif command == "S":
-                self.speed = int(value)
+                try:
+                    self.speed = int(value)
+                except Exception as e:
+                    logging.warning("[速度数据异常]")
             else:
                 print("Command not found")
             # print(f"command: {command}")
