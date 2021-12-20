@@ -243,6 +243,16 @@ class Ui_Form(QtWidgets.QMainWindow):
         self.label_9.setObjectName("label_9")
         self.label_9.raise_()
 
+        self.label_10 = QtWidgets.QLabel(Form)
+        self.label_10.setGeometry(QtCore.QRect(170, 690, 191, 81))
+        self.label_10.setStyleSheet("QLabel{\n"
+                                    "    color:rgb(217, 217, 217);\n"
+                                    "    font-size:16px;\n"
+                                    "    border-radius:\n"
+                                    "    8px;font-family: 微软雅黑;\n"
+                                    "}")
+        self.label_10.raise_()
+
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
@@ -304,6 +314,9 @@ class Ui_Form(QtWidgets.QMainWindow):
         self.label_7.setText(_translate("Form", "°C"))
         self.label_8.setText(_translate("Form", "%"))
         self.label_9.setText(_translate("Form", "Fan Controller"))
+        self.label_10.setText(_translate("Form", "张维璞 1120191516\n"
+                                         "张益玮 1120193111\n"
+                                         "马云祥 1120191867"))
 
     def to_uart_settings(self):
         self.uart_dialog = UART_Ui_Dialog()

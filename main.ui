@@ -422,6 +422,29 @@ QPushButton:pressed{
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
+  <widget class="QLabel" name="label_10">
+   <property name="geometry">
+    <rect>
+     <x>170</x>
+     <y>690</y>
+     <width>191</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+    color:rgb(217, 217, 217);
+    font-size:16px;
+    border-radius:
+    8px;font-family: 微软雅黑;
+}</string>
+   </property>
+   <property name="text">
+    <string>张维璞 1120191516
+张益玮 1120193111
+马云祥 1120191867</string>
+   </property>
+  </widget>
   <zorder>label</zorder>
   <zorder>label_3</zorder>
   <zorder>graphicsView</zorder>
@@ -437,6 +460,7 @@ QPushButton:pressed{
   <zorder>label_8</zorder>
   <zorder>graphicsView_2</zorder>
   <zorder>label_9</zorder>
+  <zorder>label_10</zorder>
  </widget>
  <resources/>
  <connections/>
