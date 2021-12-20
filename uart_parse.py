@@ -11,9 +11,10 @@ def get_uart_default_settings():
 
 def get_uart_port_list():
     _port_list = list(serial.tools.list_ports.comports())
+    print(_port_list)
     port_list = []
     for port in _port_list:
-        port_list.append(str(port)[:4])
+        port_list.append(str(port).split(" ")[0])
     return port_list
 
 
