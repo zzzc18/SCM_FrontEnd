@@ -9,3 +9,7 @@
 转换方式
 
 `pyuic5.exe -o main_ui.py .\main.ui`
+
+QT Designer
+
+`pyqt5-tools.exe designer`
