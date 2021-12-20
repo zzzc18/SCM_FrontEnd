@@ -59,11 +59,14 @@ class UARTParser():
         return self.port, self.baudrate, self.bytesize, self.parity, self.stopbits
 
     def get_data(self):
+        data = None
         try:
             data = self.serial.read_all()
         except Exception as e:
             logging.error("[数据读取异常]")
             print("---读取数据异常---", e)
+        if data == None:
+            return
         data = str(data, encoding="utf-8")
         if data == "":
             return

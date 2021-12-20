@@ -14,9 +14,8 @@ class SpeedConfig():
         self.uart_parser = uart_parser
 
     def send(self):
-        mode = 0 if self.mode == "normal" else 1
         speed_data = f"S{self.speed:03d}"
-        mode_data = f"M{mode:03d}"
+        mode_data = f"M{self.mode:03d}"
         count_down = f"C{self.count_down:03d}"
         data = speed_data+mode_data+count_down
         self.uart_parser.send_data(data)

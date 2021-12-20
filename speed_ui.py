@@ -118,18 +118,6 @@ class Ui_Dialog(QtWidgets.QDialog):
         self.lineEdit = QtWidgets.QLineEdit(Dialog)
         self.lineEdit.setGeometry(QtCore.QRect(330, 220, 101, 31))
         self.lineEdit.setObjectName("lineEdit")
-        self.checkBox = QtWidgets.QCheckBox(Dialog)
-        self.checkBox.setGeometry(QtCore.QRect(330, 270, 121, 41))
-        self.checkBox.setStyleSheet("QCheckBox{\n"
-                                    "    color:Black;\n"
-                                    "    border-radius: 7px;\n"
-                                    "    font-family:微软雅黑;\n"
-                                    "    background:#FFFFFF;\n"
-                                    "    border:1px;\n"
-                                    "    font-size:16px;\n"
-                                    "}")
-        self.checkBox.setTristate(False)
-        self.checkBox.setObjectName("checkBox")
         self.comboBox_3 = QtWidgets.QComboBox(Dialog)
         self.comboBox_3.setGeometry(QtCore.QRect(440, 220, 71, 31))
         self.comboBox_3.setStyleSheet("QComboBox{\n"
@@ -152,6 +140,30 @@ class Ui_Dialog(QtWidgets.QDialog):
         self.label_8.setAlignment(QtCore.Qt.AlignCenter)
         self.label_8.setObjectName("label_8")
 
+        self.comboBox_6 = QtWidgets.QComboBox(Dialog)
+        self.comboBox_6.setGeometry(QtCore.QRect(330, 280, 101, 31))
+        self.comboBox_6.setStyleSheet("QComboBox{\n"
+                                      "    font-size:18px;\n"
+                                      "    font-family: Consolas;\n"
+                                      "}")
+        self.comboBox_6.setObjectName("comboBox_6")
+        self.comboBox_6.addItem("")
+        self.comboBox_6.addItem("")
+        self.comboBox_6.addItem("")
+
+        self.label_12 = QtWidgets.QLabel(Dialog)
+        self.label_12.setGeometry(QtCore.QRect(200, 280, 101, 31))
+        self.label_12.setStyleSheet("QLabel{\n"
+                                    "    background:#6C6C6C;\n"
+                                    "    color:white;\n"
+                                    "    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);\n"
+                                    "    font-size:16px;\n"
+                                    "    border-radius:\n"
+                                    "    8px;font-family: 微软雅黑;\n"
+                                    "}")
+        self.label_12.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_12.setObjectName("label_12")
+
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
@@ -163,7 +175,7 @@ class Ui_Dialog(QtWidgets.QDialog):
 
     def apply_changes(self):
         self.speed_config.speed = self.horizontalSlider.value()
-        self.speed_config.mode = "special" if self.checkBox.isChecked() else "normal"
+        self.speed_config.mode = self.comboBox_6.currentIndex()
         if self.lineEdit.text() != "":
             self.speed_config.count_down = int(self.lineEdit.text())
         else:
@@ -187,8 +199,14 @@ class Ui_Dialog(QtWidgets.QDialog):
         self.pushButton_3.setText(_translate("Dialog", "X"))
         self.label_2.setText(_translate("Dialog", "转速"))
         self.label_3.setText(_translate("Dialog", "定时"))
-        self.checkBox.setText(_translate("Dialog", "自然风模式"))
+
         self.comboBox_3.setItemText(0, _translate("Dialog", "秒"))
         self.comboBox_3.setItemText(1, _translate("Dialog", "分钟"))
         self.comboBox_3.setItemText(2, _translate("Dialog", "小时"))
+
+        self.comboBox_6.setItemText(0, _translate("Dialog", "手动"))
+        self.comboBox_6.setItemText(1, _translate("Dialog", "自动"))
+        self.comboBox_6.setItemText(2, _translate("Dialog", "自然风"))
+
+        self.label_12.setText(_translate("Dialog", "运行模式"))
         self.label_8.setText(_translate("Dialog", "%"))

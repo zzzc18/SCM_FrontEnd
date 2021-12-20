@@ -293,7 +293,7 @@ class Ui_Form(QtWidgets.QMainWindow):
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
-        self.pushButton.setText(_translate("Form", "转速和定时设定"))
+        self.pushButton.setText(_translate("Form", "风扇设定"))
         self.pushButton_2.setText(_translate("Form", "-"))
         self.pushButton_3.setText(_translate("Form", "X"))
         self.label_2.setText(_translate("Form", "实时温度"))
