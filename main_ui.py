@@ -19,7 +19,7 @@ from draw_figure import SpeedFigure, TemperatureFigure
 import logging
 
 REFRESH_TIME = 1000
-DATA_LIST_LIMIT = 30
+DATA_LIST_LIMIT = 10
 
 
 class Ui_Form(QtWidgets.QMainWindow):

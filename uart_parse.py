@@ -67,26 +67,30 @@ class UARTParser():
             print("---读取数据异常---", e)
         if data == None:
             return
-        data = str(data, encoding="utf-8")
-        if data == "":
-            return
-        lines = data.split("\r\n")
-        for line in lines:
-            if line == "":
-                continue
-            command, value = line.split(" ")
-            if command == "T":
-                try:
-                    self.temperature = int(value)
-                except Exception as e:
-                    logging.warning("[温度数据异常]")
-            elif command == "S":
-                try:
-                    self.speed = int(value)
-                except Exception as e:
-                    logging.warning("[速度数据异常]")
-            else:
-                print("Command not found")
+        try:
+            data = str(data, encoding="utf-8")
+            if data == "":
+                return
+            lines = data.split("\r\n")
+            for line in lines:
+                if line == "":
+                    continue
+                command, value = line.split(" ")
+                if command == "T":
+                    try:
+                        self.temperature = int(value)
+                    except Exception as e:
+                        logging.warning("[温度数据异常]")
+                elif command == "S":
+                    try:
+                        self.speed = int(value)
+                    except Exception as e:
+                        logging.warning("[速度数据异常]")
+                else:
+                    print("Command not found")
+        except Exception as e:
+            logging.error("[数据格式异常]")
+            print("---读取格式异常---", e)
             # print(f"command: {command}")
             # print(f"value: {value}")
 
